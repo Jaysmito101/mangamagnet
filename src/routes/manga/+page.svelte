@@ -1,5 +1,6 @@
 <script>
     export let data;
+
     let sortOption = "publishedAtRaw"; // default sort option
     let sortOrder = "desc"; // default sort order
     let searchQuery = "";

@@ -7,7 +7,7 @@
     let foundMangas = [];
 
     let onSearch = () => {
-        if (new Date().getTime() - lastSearchedTime < 200) {
+        if (new Date().getTime() - lastSearchedTime < 300) {
             return;
         }
 
@@ -16,6 +16,7 @@
         searchManga(searchTerm).then((data) => {
             foundMangas = [];
             for (let manga of data) {
+                console.log(manga);
                 foundMangas.push(processMangaData(manga));
             }
         });

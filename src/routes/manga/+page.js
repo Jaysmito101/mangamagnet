@@ -1,11 +1,15 @@
 import { fetchMangaChapters, processMangaChapterData, processMangaData } from "$lib/mangadex.js";
 
+export const prerender = false;
+
+
 export async function load({fetch, url}) {
-    const mangaDataReq = await fetch(`https://api.mangadex.org/manga/${url.searchParams.get("id")}?includes[]=cover_art`)
+    const slug = url.searchParams.get("id") || "801513ba-a712-498c-8f57-cae55b38cc92";
+    const mangaDataReq = await fetch(`https://api.mangadex.org/manga/${slug}?includes[]=cover_art`)
     const mangaData = await mangaDataReq.json();
 
     let mangaChapters = [];
-    const mangaChaptersRaw = await fetchMangaChapters(url.searchParams.get("id"));
+    const mangaChaptersRaw = await fetchMangaChapters(slug);
     for (let chapter of mangaChaptersRaw) {
         mangaChapters.push(processMangaChapterData(chapter));
     }
