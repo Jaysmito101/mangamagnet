@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/4 flex justify-end px-4 py-2">
-                    <a href={`/manga/chapter/${chapter.id}`} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Read Chapter</a>
+                    <a href={`/manga/chapter?id=${chapter.id}`} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Read Chapter</a>
                 </div>
             </div>
         {/if}

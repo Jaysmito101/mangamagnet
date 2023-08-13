@@ -7,7 +7,7 @@
     let foundMangas = [];
 
     let onSearch = () => {
-        if (new Date().getTime() - lastSearchedTime < 1000) {
+        if (new Date().getTime() - lastSearchedTime < 200) {
             return;
         }
 
@@ -16,7 +16,6 @@
         searchManga(searchTerm).then((data) => {
             foundMangas = [];
             for (let manga of data) {
-                console.log(manga);
                 foundMangas.push(processMangaData(manga));
             }
         });
@@ -38,7 +37,7 @@
 {#each foundMangas as foundManga}
     <div
       class="mx-3 mt-6 flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-    <a href="/manga/{foundManga.id}">
+    <a href="/manga?id={foundManga.id}">
         <img
             class="rounded-t-lg"
             src={foundManga.coverImage}
