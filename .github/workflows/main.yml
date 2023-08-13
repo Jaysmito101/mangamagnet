@@ -31,9 +31,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # You need to set up a deploy key
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          publish_branch: gh-pages  # Change this to your target branch (often gh-pages)
 
       - name: Get Deployment URL
         id: deployment
