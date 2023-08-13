@@ -35,7 +35,8 @@ const config = {
 	   
 			  // otherwise fail the build
 			  throw new Error(message);
-			}
+			},
+			entries: []
 		  }
 	}
 };
