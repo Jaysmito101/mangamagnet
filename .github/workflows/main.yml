@@ -9,6 +9,10 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
     
     steps:
       - name: Checkout
@@ -37,6 +41,3 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
     
-    permissions:
-      id-token: write
-      contents: read
