@@ -1,55 +1,44 @@
 name: Deploy to GitHub Pages
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main  # Change this to the appropriate branch name
+  workflow_dispatch:
 
 jobs:
-  build_site:
-  runs-on: ubuntu-latest
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v3
-
-    # If you're using pnpm, add this step then change the commands and cache key below to use `pnpm`
-    # - name: Install pnpm
-    #   uses: pnpm/action-setup@v2
-    #   with:
-    #     version: 8
-
-  - name: Install Node.js
-    uses: actions/setup-node@v3
-    with:
-      node-version: 18
-      cache: npm
-
-  - name: Install dependencies
-    run: npm install
-
-  - name: build
-    env:
-      BASE_PATH: '/mangamagnet'
-    run: |
-      npm run build
-      touch build/.nojekyll
-
-  - name: Upload Artifacts
-    uses: actions/upload-pages-artifact@v1
-    with:
-      # this should match the `pages` option in your adapter-static options
-      path: 'build/'
-
-  deploy:
-    needs: build_site
+  build_and_deploy:
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  permissions:
-    pages: write
-    id-token: write
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+        env:
+          BASE_PATH: '/mangamagnet'
+      - run: touch build/.nojekyll
 
-  environment:
-    name: github-pages
-    url: ${{ steps.deployment.outputs.page_url }}
-  
-  steps:
-  - name: Deploy
-    id: deployment
-    uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}  # You need to set up a deploy key
+          publish_dir: ./build
+          publish_branch: gh-pages  # Change this to your target branch (often gh-pages)
+
+      - name: Get Deployment URL
+        id: deployment
+        run: echo "Deployed to ${{ steps.deploy.outputs.deployed_url }}"
+    
+    permissions:
+      id-token: write
+      contents: read
